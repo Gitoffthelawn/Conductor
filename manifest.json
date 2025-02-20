@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Conductor - Container Redirector",
+  "name": "Conductor: Container Redirector",
   "description": "Dynamically redirects URLs to specific containers.",
-  "version": "1.0",
+  "version": "1.0.2",
   "author": "mcortt",
   "icons": {
     "128": "images/icon128.png",
@@ -25,7 +25,6 @@
     "<all_urls>"
   ],
   "background": {
-    "service_worker": "background.js",
     "scripts": ["background.js"]
   },
   "options_ui": {
