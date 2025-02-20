@@ -59,31 +59,4 @@ To match any URL that *starts with* "https://www.example.com" *or* "https://exam
 
 ```regex
 ^https://(www\.)?example\.com
-
-
-
-
-**Key improvements in the description:**
-
-*   **Clear and Concise:**  Uses clear language and avoids jargon.
-*   **Feature List:** Highlights the key features.
-*   **How to Use:**  Provides step-by-step instructions.
-*   **Permissions Explanation:**  *Thoroughly* explains each permission and *why* it's needed. This is *very* important for building user trust.  The explanation of `<all_urls>` is especially crucial.
-*   **Regular Expression Guidance:**  Provides basic regex tips and links to external resources. This is essential since the extension relies on regex.
-*   **Notes:** Includes helpful notes for users.
-*   **Open Source:** Includes a placeholder for your GitHub repository URL.
-* **License:** Includes a placeholder for the license.
-
-**Before Submitting to AMO:**
-
-1.  **Replace Placeholders:**
-    *   Replace `[YOUR_GITHUB_REPOSITORY_URL]` with the actual URL of your GitHub repository.
-    *   Replace `"conductor@yourdomain.com"` in the `manifest.json` with *your* chosen add-on ID.
-    *   Choose a license, and update the License section.
-2.  **Test Thoroughly:** Test the extension again to make sure everything works as expected.
-3.  **Create Icons:** Create the icon files (16x16, 32x32, 48x48, 128x128 PNGs) and put them in an `images` folder.
-4.  **Zip:** Create a ZIP file containing all the extension files (`manifest.json`, `background.js`, `options.html`, `options.js`, `images/`, etc.). This ZIP file is what you'll upload to AMO.
-5.  **Submit:** Go to [addons.mozilla.org/developers/](https://www.google.com/search?q=https://www.google.com/url%3Fsa%3DE%26source%3Dgmail%26q%3Dhttp://addons.mozilla.org/developers/) and follow the instructions to submit your extension.
-
-This comprehensive description and the code we've developed should give you a great starting point for publishing your extension! Remember to be responsive to user feedback after you publish. Good luck!
-
+```
