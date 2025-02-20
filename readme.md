@@ -21,7 +21,6 @@ Conductor is a Firefox extension that allows you to automatically redirect speci
     *   Enter a **URL Pattern:** This is a *regular expression* that will be matched against the URL.  For example:
         *   `example\.com`:  Matches any URL containing "example.com".
         *   `^https://www\.example\.com`: Matches URLs that *start with* "[https://www.example.com](https://www.google.com/url?sa=E&source=gmail&q=https://www.example.com)".
-        *   `login\.microsoftonline\.com.*client_id=YOUR_CLIENT_ID`: Matches Microsoft login URLs with a specific `client_id`.  (Replace `YOUR_CLIENT_ID` with the actual ID.)
         *   `.*\.google\.com`: Matches any Google domain or subdomain.
     *   Select a **Container Name:** Choose the container you want to open matching URLs in.  You must have already created the container in Firefox.
     *   Click **Save**
@@ -31,7 +30,7 @@ Conductor is a Firefox extension that allows you to automatically redirect speci
 
 This extension requires the following permissions:
 
-*   **`webRequest` and `webRequestBlocking`:** These permissions are necessary to intercept network requests *before* they are sent, allowing the extension to redirect URLs. This is the core functionality of the extension.
+*   **`webRequest` and `webRequestBlocking`:** These permissions are necessary to intercept network requests *before* they are sent, allowing the extension to redirect URLs to the appropriate container. This is the core functionality of the extension.
 *   **`tabs`:**  This permission is used to create new tabs in the specified containers and to manage existing tabs (e.g., closing the original tab).
 *   **`cookies`:**  This permission is required to access the `cookieStoreId` associated with each tab and container. This ensures that the redirection happens within the correct container context.
 *   **`contextualIdentities`:**  This permission allows the extension to interact with Firefox's container feature, retrieving the list of available containers and creating new tabs within specific containers.
