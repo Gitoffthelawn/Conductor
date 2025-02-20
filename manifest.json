@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "Conductor - Container Redirector",
+  "description": "Dynamically redirects URLs to specific containers.",
+  "version": "1.0",
+  "author": "mcortt",
+  "icons": {
+    "128": "images/icon128.png",
+    "48": "images/icon48.png",
+    "32": "images/icon32.png",
+    "16": "images/icon16.png"
+  },
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "tabs",
+    "cookies",
+    "contextualIdentities",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "optional_host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "scripts": ["background.js"]
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false 
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "conductor@Container.Redirector"
+    }
+  }
+}
