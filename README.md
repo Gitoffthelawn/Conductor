@@ -2,6 +2,10 @@
 
 Conductor is a Firefox extension that allows you to automatically redirect specific URLs to designated Firefox containers.  Take control of your browsing context and enhance your privacy and organization.
 
+## Availability
+
+Available for Firefox here: https://addons.mozilla.org/firefox/addon/conductor-container-redirector/
+
 ## Features
 
 *   **User-Defined Rules:** Create custom rules to redirect URLs based on powerful regular expressions.
