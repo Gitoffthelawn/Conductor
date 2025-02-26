@@ -1,8 +1,8 @@
 body {
     font-family: sans-serif;
     padding: 20px;
-    background-color: #fff; /* Default light theme background */
-    color: #000; /* Default light theme text color */
+    background-color: #fff; 
+    color: #000; 
 }
 
 .rule {
@@ -19,12 +19,11 @@ body {
 }
 
 .rule input {
-    min-width: 20em;
+    min-width: 85vw;
 }
-
 .rule button {
     padding: 5px 10px;
-    background-color: #f44336; /* Red color for delete */
+    background-color: #f44336; 
     color: white;
     border: none;
     border-radius: 4px;
@@ -53,8 +52,8 @@ button:hover {
 /* Dark Theme Styles */
 @media (prefers-color-scheme: dark) {
     body {
-        background-color: #333; /* Dark background */
-        color: #eee; /* Light text */
+        background-color: #333; 
+        color: #eee;
     }
 
     .rule {
@@ -67,19 +66,13 @@ button:hover {
         border-color: #555;
     }
     .rule button {
-        background-color: #c82e23; /* Slightly Darker Red */
+        background-color: #c82e23; 
     }
     button {
-        background-color: #3e8e41; /* Slightly Darker Green*/
+        background-color: #3e8e41; 
     }
       button:hover {
-        background-color: #2e6e31; /* Darker green */
+        background-color: #2e6e31; 
     }
 }
 
-/* Light Theme Styles (Optional, for Explicit Overrides) */
-@media (prefers-color-scheme: light) {
-  /* You can add specific overrides for the light theme here,
-     but if the defaults at the top are already good for the
-     light theme, you don't need this section. */
-}
