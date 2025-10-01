@@ -1,5 +1,9 @@
 console.log("Container Redirector extension loaded");
 
+browser.action.onClicked.addListener(() => {
+    browser.runtime.openOptionsPage();
+});
+
 async function handleRedirect(details) {
     // Only process main frame navigations (when a new page is being loaded).
     if (details.type !== 'main_frame') {

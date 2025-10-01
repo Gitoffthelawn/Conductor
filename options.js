@@ -19,11 +19,11 @@ function createRuleElement(rule, containers) {
   ruleDiv.appendChild(urlPatternInput);
 
   // Add a warning label:
-  const regexWarning = document.createElement("p");
-  regexWarning.textContent = "Warning: Use regular expressions carefully. Incorrect regex can break the extension or cause unexpected behavior.";
-  regexWarning.style.color = "red";
-  regexWarning.style.fontSize = "0.8em";
-  ruleDiv.appendChild(regexWarning);
+  // const regexWarning = document.createElement("p");
+  // regexWarning.textContent = "Warning: Use regular expressions carefully. Incorrect regex can break the extension or cause unexpected behavior.";
+  // regexWarning.style.color = "red";
+  // regexWarning.style.fontSize = "0.8em";
+  // ruleDiv.appendChild(regexWarning);
 
   const containerSelect = document.createElement("select");
   if (containers && containers.length > 0) { // Check if containers exist

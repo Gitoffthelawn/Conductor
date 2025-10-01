@@ -49,6 +49,11 @@ button:hover {
   margin-top: 5px;
 }
 
+.regex-warning {
+    color: red;
+    font-size: 0.8em;
+}
+
 /* Dark Theme Styles */
 @media (prefers-color-scheme: dark) {
     body {
