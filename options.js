@@ -9,52 +9,54 @@ async function loadContainers() {
 }
 
 function createRuleElement(rule, containers) {
-  const ruleDiv = document.createElement("div");
-  ruleDiv.classList.add("rule");
+    const ruleDiv = document.createElement("div");
+    ruleDiv.classList.add("rule");
 
-  const urlPatternInput = document.createElement("input");
-  urlPatternInput.type = "text";
-  urlPatternInput.placeholder = "URL Regex (e.g., ^https://example\\.com.*)";
-  urlPatternInput.value = rule ? rule.urlPattern : "";
-  ruleDiv.appendChild(urlPatternInput);
+    // 1. URL Pattern (Top Line)
+    const urlPatternInput = document.createElement("input");
+    urlPatternInput.type = "text";
+    urlPatternInput.placeholder = "URL Regex (e.g., ^https://example\\.com.*)";
+    urlPatternInput.classList.add("rule-pattern"); // Class for styling
+    urlPatternInput.value = rule ? rule.urlPattern : "";
+    ruleDiv.appendChild(urlPatternInput);
 
-  // Add a warning label:
-  // const regexWarning = document.createElement("p");
-  // regexWarning.textContent = "Warning: Use regular expressions carefully. Incorrect regex can break the extension or cause unexpected behavior.";
-  // regexWarning.style.color = "red";
-  // regexWarning.style.fontSize = "0.8em";
-  // ruleDiv.appendChild(regexWarning);
+    // 2. Container Select (Bottom Left)
+    const containerSelect = document.createElement("select");
+    if (containers && containers.length > 0) { 
+        containers.forEach(container => {
+            const option = document.createElement("option");
+            option.value = container.name;
+            option.textContent = container.name;
+            containerSelect.appendChild(option);
+        });
+    } else {
+        const noContainersOption = document.createElement("option");
+        noContainersOption.textContent = "No Containers Available";
+        noContainersOption.disabled = true; 
+        containerSelect.appendChild(noContainersOption);
+    }
+    if (rule) {
+        containerSelect.value = rule.containerName;
+    }
+    ruleDiv.appendChild(containerSelect);
 
-  const containerSelect = document.createElement("select");
-  if (containers && containers.length > 0) { // Check if containers exist
-      containers.forEach(container => {
-          const option = document.createElement("option");
-          option.value = container.name;
-          option.textContent = container.name;
-          containerSelect.appendChild(option);
-      });
-  } else {
-      console.warn("createRuleElement: No containers provided.");
-      const noContainersOption = document.createElement("option");
-      noContainersOption.textContent = "No Containers Available";
-      noContainersOption.disabled = true; // Disable the option
-      containerSelect.appendChild(noContainersOption);
+    // 3. Rule Name (Bottom Middle - To the right of dropdown)
+    const nameInput = document.createElement("input");
+    nameInput.type = "text";
+    nameInput.placeholder = "Rule Name (Optional)";
+    nameInput.classList.add("rule-name"); // Class for styling
+    nameInput.value = (rule && rule.name) ? rule.name : "";
+    ruleDiv.appendChild(nameInput);
 
-  }
-  if (rule) {
-      containerSelect.value = rule.containerName;
-  }
-  ruleDiv.appendChild(containerSelect);
+    // 4. Delete Button (Bottom Right)
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete Rule";
+    deleteButton.addEventListener("click", () => {
+        ruleDiv.remove();
+    });
+    ruleDiv.appendChild(deleteButton);
 
-
-  const deleteButton = document.createElement("button");
-  deleteButton.textContent = "Delete Rule";
-  deleteButton.addEventListener("click", () => {
-      ruleDiv.remove();
-  });
-  ruleDiv.appendChild(deleteButton);
-
-  return ruleDiv;
+    return ruleDiv;
 }
 
 async function loadRules() {
@@ -67,7 +69,7 @@ async function loadRules() {
 
   const containers = await loadContainers();
   if (containers.length === 0) {
-      rulesContainer.textContent = "No containers found.  Create some containers!";
+      rulesContainer.textContent = "No containers found. Create some containers!";
       return;
   }
 
@@ -83,6 +85,7 @@ async function loadRules() {
       console.error("loadRules: Error retrieving rules:", error);
   }
 }
+
 function saveRules() {
   const rulesContainer = document.getElementById("rulesContainer");
   if (!rulesContainer) {
@@ -93,25 +96,27 @@ function saveRules() {
   const rules = [];
 
   ruleElements.forEach(ruleElement => {
-      const urlPatternInput = ruleElement.querySelector("input");
+      // Updated selectors to use the specific classes added in createRuleElement
+      const nameInput = ruleElement.querySelector(".rule-name");
+      const urlPatternInput = ruleElement.querySelector(".rule-pattern");
       const containerSelect = ruleElement.querySelector("select");
 
-      if(!urlPatternInput || !containerSelect) {
+      if(!nameInput || !urlPatternInput || !containerSelect) {
         console.warn("saveRules: input or select missing.");
         return;
       }
 
+      const name = nameInput.value;
       const urlPattern = urlPatternInput.value;
       const containerName = containerSelect.value;
 
+      // Only require urlPattern and containerName to be valid to save
       if (urlPattern && containerName) {
-          rules.push({ urlPattern, containerName });
+          rules.push({ name, urlPattern, containerName });
+      } else {
+         console.warn("saveRules: Skipping rule due to missing URL pattern or container name.");
       }
-    else{
-       console.warn("saveRules: Skipping rule due to missing URL pattern or container name.");
-    }
   });
-
 
   browser.storage.sync.set({ redirectRules: rules })
       .then(() => {
@@ -153,15 +158,12 @@ async function checkPermissions() {
         This permission is used *only* to match URLs against your *own* redirection rules.  
         No data is collected or transmitted.`;
 
-      // Make the text black:
       warningDiv.style.color = "black";
-
-      // Insert the warning at the top of the body:
       document.body.insertBefore(warningDiv, document.body.firstChild);
   }
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await checkPermissions(); //CHECK PERMISSIONS
+  await checkPermissions(); 
   await loadRules();
 });

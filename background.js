@@ -20,17 +20,25 @@ async function handleRedirect(details) {
         // Determine if the originating tab is a 'moz-extension://' page, 'about:newtab', or 'about:blank'
         let shouldCloseOriginatingTab = false;
         let originatingTabIdToClose = null;
+        let targetIndex = undefined;
 
         if (details.tabId) { // Check if the request originated from an existing tab
             try {
                 const originatingTab = await browser.tabs.get(details.tabId);
-                // Check if the originating tab's URL matches any of the specified types
-                if (originatingTab && originatingTab.url && 
-                    (originatingTab.url.startsWith("moz-extension://") || 
-                     originatingTab.url === "about:newtab" || 
-                     originatingTab.url === "about:blank")) {
-                    shouldCloseOriginatingTab = true;
-                    originatingTabIdToClose = originatingTab.id;
+                if (originatingTab) {
+                    // Check if the originating tab's URL matches any of the specified types
+                    if (originatingTab.url && 
+                        (originatingTab.url.startsWith("moz-extension://") || 
+                         originatingTab.url === "about:newtab" || 
+                         originatingTab.url === "about:blank")) {
+                        shouldCloseOriginatingTab = true;
+                        originatingTabIdToClose = originatingTab.id;
+                        // Replace the current tab's position
+                        targetIndex = originatingTab.index;
+                    } else {
+                        // Open next to the current tab
+                        targetIndex = originatingTab.index + 1;
+                    }
                 }
             } catch (error) {
                 console.error("Error getting originating tab details:", error);
@@ -49,6 +57,8 @@ async function handleRedirect(details) {
                 }
 
                 if (regex.test(details.url)) {
+                    const ruleName = rule.name || "Unnamed Rule";
+                    console.log(`Matched Rule: "${ruleName}" for URL: ${details.url}`);
                     const containers = await browser.contextualIdentities.query({});
                     const targetContainer = containers.find(c => c.name === rule.containerName);
         
@@ -64,11 +74,18 @@ async function handleRedirect(details) {
 
                     // Always create a new tab in the target container for main_frame navigations.
                     try {
-                        await browser.tabs.create({
+                        const createProperties = {
                             url: details.url,
                             cookieStoreId: targetContainer.cookieStoreId,
                             active: true // Make the new tab active
-                        });
+                        };
+
+                        // Apply the calculated index if available
+                        if (targetIndex !== undefined) {
+                            createProperties.index = targetIndex;
+                        }
+
+                        await browser.tabs.create(createProperties);
 
                         // If the originating tab is a detected new tab page, close it.
                         if (shouldCloseOriginatingTab && originatingTabIdToClose) {

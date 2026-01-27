@@ -16,11 +16,22 @@ body {
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    margin-top: 5px; /* Adds breathing room between the rows */
 }
 
-.rule input {
+/* FIX: Only the Pattern input gets the full width */
+.rule .rule-pattern {
     min-width: 85vw;
+    display: block; /* Forces it to be on its own line */
+    margin-bottom: 5px;
 }
+
+/* The Name input gets a smaller, fixed width to fit next to dropdown */
+.rule .rule-name {
+    width: 200px; 
+    min-width: auto; /* Overrides generic input sizing if necessary */
+}
+
 .rule button {
     padding: 5px 10px;
     background-color: #f44336; 
@@ -32,6 +43,7 @@ body {
 .rule button:hover{
      background-color: #da190b;
 }
+
 button {
     padding: 5px 10px;
     background-color: #4CAF50;
@@ -44,9 +56,6 @@ button {
 
 button:hover {
     background-color: #3e8e41;
-}
-.param-value-pair {
-  margin-top: 5px;
 }
 
 .regex-warning {
@@ -80,4 +89,3 @@ button:hover {
         background-color: #2e6e31; 
     }
 }
-
